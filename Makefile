@@ -28,7 +28,8 @@
 # release is default, for debugging : make BUILD=debug
 BUILD := release
 flags.debug = -g -Wall
-flags.release =
+flags.release = -w
+O := 0
 
 
 IDIR = include
@@ -56,7 +57,10 @@ $(BUILDDIR)/$(EXECUTABLE): $(OBJECTS)
 	$(CC) $^ -o $@ $(LDFLAGS) 
 
 $(OBJECTS): $(BUILDDIR)/%.o: $(SRCDIR)/%.c $(DEPS)
-	$(CC) -c $< -o $@ $(CFLAGS)
+	$(CC) -c -O$(O) $< -o $@ $(CFLAGS)
+
+.PHONY: clean_run
+clean_run: clean run 
 
 .PHONY: clean
 clean:
@@ -64,7 +68,7 @@ clean:
 
 
 # If the first argument is "run"...
-ifeq (run,$(firstword $(MAKECMDGOALS)))
+ifneq ($(filter $(firstword $(MAKECMDGOALS)), run clean_run),)
   # use the rest as arguments for "run"
   RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
   # ...and turn them into do-nothing targets
