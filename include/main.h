@@ -28,7 +28,8 @@
 #ifndef _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MAIN_H_
 #define _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MAIN_H_
 
-#define DEBUG 1
+#define DEBUG 0
+#define FILENAME "input/in.txt"
 
 #define dputs  \
     if (DEBUG) \
@@ -37,6 +38,6 @@
     if (DEBUG)  \
     printf
 
-void read_file(char *filename, int **arr, int *n);
+void read_file(int **arr, int *n);
 
 #endif // _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MAIN_H_

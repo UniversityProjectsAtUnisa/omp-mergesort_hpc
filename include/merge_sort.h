@@ -29,7 +29,7 @@
 #ifndef _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MERGE_SORT_H_
 #define _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MERGE_SORT_H_
 
-void merge_sort(int *X, int n, int *tmp);
+void merge_sort(int *X, int n, int *tmp, int task_size);
 void merge_sort_aux(int *X, int n, int *tmp);
 
 #endif // _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MERGE_SORT_H_

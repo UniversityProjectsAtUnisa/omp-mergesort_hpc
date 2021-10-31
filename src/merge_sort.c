@@ -30,16 +30,16 @@
 #include <omp.h>
 #include "merge_sort.h"
 
-void merge_sort(int *X, int n, int *tmp)
+void merge_sort(int *X, int n, int *tmp, int task_size)
 {
     if (n < 2)
         return;
 
-#pragma omp task shared(X)
-    merge_sort(X, n / 2, tmp);
+#pragma omp task shared(X) if (n > task_size)
+    merge_sort(X, n / 2, tmp, task_size);
 
-#pragma omp task shared(X)
-    merge_sort(X + (n / 2), n - (n / 2), tmp + n / 2);
+#pragma omp task shared(X) if (n > task_size)
+    merge_sort(X + (n / 2), n - (n / 2), tmp + n / 2, task_size);
 
 #pragma omp taskwait
     merge_sort_aux(X, n, tmp);

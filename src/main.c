@@ -36,10 +36,11 @@
 int main(int argc, char *argv[])
 {
     dprintf("argc: %d\n", argc);
-    char *filename = (argc > 1) ? argv[1] : "input/in.txt";
+    int task_size = (argc > 1) ? atoi(argv[1]) : 100;
+    dprintf("task_size: %d\n", task_size);
     int n;
     int *arr, *temp;
-    read_file(filename, &arr, &n);
+    read_file(&arr, &n);
     temp = malloc(n * sizeof(int));
 
     for (size_t i = 0; i < n; i++)
@@ -47,8 +48,14 @@ int main(int argc, char *argv[])
         dprintf("%d\n", arr[i]);
     }
 
-    merge_sort(arr, n, temp);
-
+    double end, start = omp_get_wtime();
+#pragma omp parallel
+    {
+#pragma omp single
+        merge_sort(arr, n, temp, task_size);
+    }
+    end = omp_get_wtime();
+    printf("%f", end - start);
     for (size_t i = 0; i < n; i++)
     {
         dprintf("%d\n", arr[i]);
@@ -59,10 +66,10 @@ int main(int argc, char *argv[])
     return EXIT_SUCCESS;
 }
 
-void read_file(char *filename, int **arr, int *n)
+void read_file(int **arr, int *n)
 {
     FILE *fp;
-    if ((fp = fopen(filename, "r")) == NULL)
+    if ((fp = fopen(FILENAME, "r")) == NULL)
     {
         dputs("Input file not found");
         exit(EXIT_FAILURE);

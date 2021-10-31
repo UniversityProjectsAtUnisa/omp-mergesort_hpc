@@ -29,7 +29,14 @@
 BUILD := release
 flags.debug = -g -Wall
 flags.release = -w
+
+# parallel is default, for serial : make EXECUTION=serial
+EXECUTION = parallel
+OMP.parallel = -fopenmp
+OMP.serial =
 O := 0
+TASK_SIZE := 100
+
 
 
 IDIR = include
@@ -38,7 +45,7 @@ BUILDDIR = build
 EXECUTABLE = main.out
 
 CC = gcc
-OMP = -fopenmp
+OMP = ${OMP.${EXECUTION}}
 CFLAGS = ${flags.${BUILD}} -I$(IDIR) $(OMP)
 LDFLAGS = $(OMP)
 
@@ -59,22 +66,10 @@ $(BUILDDIR)/$(EXECUTABLE): $(OBJECTS)
 $(OBJECTS): $(BUILDDIR)/%.o: $(SRCDIR)/%.c $(DEPS)
 	$(CC) -c -O$(O) $< -o $@ $(CFLAGS)
 
-.PHONY: clean_run
-clean_run: clean run 
-
 .PHONY: clean
 clean:
 	rm -f $(BUILDDIR)/*.o $(BUILDDIR)/$(EXECUTABLE)
 
-
-# If the first argument is "run"...
-ifneq ($(filter $(firstword $(MAKECMDGOALS)), run clean_run),)
-  # use the rest as arguments for "run"
-  RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
-  # ...and turn them into do-nothing targets
-  $(eval $(RUN_ARGS):;@:)
-endif
-
 .PHONY: run
 run: dir $(BUILDDIR)/$(EXECUTABLE)
-	$(BUILDDIR)/$(EXECUTABLE) $(RUN_ARGS)
+	$(BUILDDIR)/$(EXECUTABLE) $(TASK_SIZE)

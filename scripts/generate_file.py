@@ -44,19 +44,24 @@ parser.add_argument('--input', dest='input', default="input/in.txt",
                     help="input file name")
 
 
+def generate_file(N, min_value=None, max_value = 2**31 - 1, filename="input/in.txt"):
+    min_value = min_value if min_value is not None else -max_value
+    with open(filename, "w") as f:
+        f.write(str(N)+"\n")
+        for _ in tqdm(range(N)):
+            r = random.randint(min_value, max_value)
+            f.write(f"{r} ")
+
+
 def main():
     N = parser.parse_args().N
     _max = parser.parse_args().max
-    _min = parser.parse_args().min if parser.parse_args().min else -_max
+    _min = parser.parse_args().min
     _input = parser.parse_args().input
 
     print(f"N: {N}, max: {_max}, min: {_min}, filename: {_input}")
 
-    with open(_input, "w") as f:
-        f.write(str(N)+"\n")
-        for _ in tqdm(range(N)):
-            r = random.randint(_min, _max)
-            f.write(f"{r} ")
+    generate_file(N, _min, _max, _input)
 
 
 if __name__ == "__main__":
