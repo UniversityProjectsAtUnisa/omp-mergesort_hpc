@@ -29,6 +29,7 @@ along with OMP Mergesort implementation.  If not, see <http: //www.gnu.org/licen
 
 import argparse
 import random
+from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('N', metavar='N', type=int,
@@ -53,7 +54,7 @@ def main():
 
     with open(_input, "w") as f:
         f.write(str(N)+"\n")
-        for _ in range(N):
+        for _ in tqdm(range(N)):
             r = random.randint(_min, _max)
             f.write(f"{r} ")
 
