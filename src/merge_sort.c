@@ -35,17 +35,17 @@ void merge_sort(int *X, int n, int *tmp, int task_size)
     if (n < 2)
         return;
 
-#pragma omp task shared(X) if (n > task_size)
+#pragma omp task shared(X) if (n >= task_size)
     merge_sort(X, n / 2, tmp, task_size);
 
-#pragma omp task shared(X) if (n > task_size)
+#pragma omp task shared(X) if (n >= task_size)
     merge_sort(X + (n / 2), n - (n / 2), tmp + n / 2, task_size);
 
 #pragma omp taskwait
-    merge_sort_aux(X, n, tmp);
+    merge(X, n, tmp);
 }
 
-void merge_sort_aux(int *X, int n, int *tmp)
+void merge(int *X, int n, int *tmp)
 {
     int i = 0;
     int j = n / 2;

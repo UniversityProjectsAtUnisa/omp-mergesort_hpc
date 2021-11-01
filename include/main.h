@@ -28,9 +28,17 @@
 #ifndef _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MAIN_H_
 #define _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MAIN_H_
 
+#include <time.h>
+
 #define DEBUG 0
 #define FILENAME "input/in.txt"
 
+#define STARTTIME(id)                             \
+    clock_t start_time_42_##id, end_time_42_##id; \
+    start_time_42_##id = clock()
+#define ENDTIME(id, x)          \
+    end_time_42_##id = clock(); \
+    x = ((double)(end_time_42_##id - start_time_42_##id)) / CLOCKS_PER_SEC
 #define dputs  \
     if (DEBUG) \
     puts

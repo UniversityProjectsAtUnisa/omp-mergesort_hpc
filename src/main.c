@@ -48,14 +48,15 @@ int main(int argc, char *argv[])
         dprintf("%d\n", arr[i]);
     }
 
-    double end, start = omp_get_wtime();
+    double time_merge;
+    STARTTIME(1);
 #pragma omp parallel
     {
 #pragma omp single
         merge_sort(arr, n, temp, task_size);
     }
-    end = omp_get_wtime();
-    printf("%f", end - start);
+    ENDTIME(1, time_merge);
+    printf("%f", time_merge);
     for (size_t i = 0; i < n; i++)
     {
         dprintf("%d\n", arr[i]);
