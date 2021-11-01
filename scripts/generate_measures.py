@@ -29,13 +29,22 @@ along with OMP Mergesort implementation.  If not, see <http: //www.gnu.org/licen
 import subprocess
 from generate_file import generate_file
 
+
+def run_command(command):
+    commands = ["bash", "-c", command]
+    return subprocess.run(commands, capture_output=True)
+
+
 def make_measures(num_threads, O_level, task_size, repetitions, execution="parallel"):
     total_time = 0
-    total_time += float(run_command(f"OMP_NUM_THREADS={num_threads} make -s clean run O={O_level} TASK_SIZE={task_size} EXECUTION={execution}").stdout.decode())
-    return total_time/repetitions
+    for _ in range(repetitions):
+        total_time += float(run_command(
+            f"OMP_NUM_THREADS={num_threads} make -s clean run O={O_level} TASK_SIZE={task_size} EXECUTION={execution}").stdout.decode())
+    return round(total_time/repetitions, 4)
+
 
 def main():
-    SIZES = [int(1e4), int(1e5), int(1e6)]
+    SIZES = [int(a) for a in [1e4, 1e5, 1e6]]
     NUMS_THREADS = [1, 2, 4, 8, 16, 32]
     O_LEVELS = [0, 1, 2, 3]
     TASK_SIZES = [50, 100, 200, 400, 800]
@@ -43,18 +52,19 @@ def main():
 
     for size in SIZES:
         generate_file(size)
+        print(f"Size: {size}")
         for O_level in O_LEVELS:
             for task_size in TASK_SIZES:
-                avg_time = make_measures(1, O_level, task_size, N_REPETITIONS, "parallel")
-                print(f"avg_time for serial execution, O{O_level} optimization, task size {task_size} = {avg_time}")
+                avg_time = make_measures(
+                    1, O_level, task_size, N_REPETITIONS, "parallel")
+                print(
+                    f"avg_time for serial execution, O{O_level} optimization, task size {task_size} = {avg_time}")
                 for num_threads in NUMS_THREADS:
-                    avg_time = make_measures(num_threads, O_level, task_size, N_REPETITIONS)
-                    print(f"avg_time for {num_threads} threads, O{O_level} optimization, task size {task_size} = {avg_time}")
-                    
+                    avg_time = make_measures(
+                        num_threads, O_level, task_size, N_REPETITIONS)
+                    print(
+                        f"avg_time for {num_threads} threads, O{O_level} optimization, task size {task_size} = {avg_time}")
 
-def run_command(command):
-    commands = ["bash", "-c", command]
-    return subprocess.run(commands, capture_output=True)
 
 if __name__ == "__main__":
     main()
