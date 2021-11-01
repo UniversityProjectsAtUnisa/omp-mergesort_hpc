@@ -30,6 +30,7 @@ along with OMP Mergesort implementation.  If not, see <http: //www.gnu.org/licen
 import argparse
 import random
 from tqdm import tqdm
+from pathlib import Path
 
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('N', metavar='N', type=int,
@@ -44,8 +45,10 @@ parser.add_argument('--input', dest='input', default="input/in.txt",
                     help="input file name")
 
 
-def generate_file(N, min_value=None, max_value = 2**31 - 1, filename="input/in.txt"):
+def generate_file(N, min_value=None, max_value=2**31 - 1, filename="input/in.txt"):
     min_value = min_value if min_value is not None else -max_value
+    
+    Path(filename).parent.mkdir(parents=True, exist_ok=True)
     with open(filename, "w") as f:
         f.write(str(N)+"\n")
         for _ in tqdm(range(N)):
