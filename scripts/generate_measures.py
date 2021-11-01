@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 '''
 Course: High Performance Computing 2020/2021
 
@@ -27,7 +28,9 @@ along with OMP Mergesort implementation.  If not, see <http: //www.gnu.org/licen
 '''
 
 import subprocess
+from tqdm import tqdm
 from generate_file import generate_file
+import statistics as stats
 
 
 def run_command(command):
@@ -35,12 +38,18 @@ def run_command(command):
     return subprocess.run(commands, capture_output=True)
 
 
-def make_measures(num_threads, O_level, task_size, repetitions, execution="parallel"):
-    total_time = 0
+def single_measure(num_threads, O_level, task_size, execution):
+    return float(run_command(f"OMP_NUM_THREADS={num_threads} make -s clean run O={O_level} TASK_SIZE={task_size} EXECUTION={execution}").stdout.decode())
+
+
+def avg_measure(num_threads, O_level, task_size, repetitions, execution="parallel"):
+    measures = []
+    # for _ in tqdm(range(repetitions)):
     for _ in range(repetitions):
-        total_time += float(run_command(
-            f"OMP_NUM_THREADS={num_threads} make -s clean run O={O_level} TASK_SIZE={task_size} EXECUTION={execution}").stdout.decode())
-    return round(total_time/repetitions, 4)
+        measures.append(single_measure(
+            num_threads, O_level, task_size, execution))
+
+    return round(stats.fmean(measures), 4), round(stats.stdev(measures), 4)
 
 
 def main():
@@ -48,22 +57,23 @@ def main():
     NUMS_THREADS = [1, 2, 4, 8, 16, 32]
     O_LEVELS = [0, 1, 2, 3]
     TASK_SIZES = [50, 100, 200, 400, 800]
-    N_REPETITIONS = 5
+    N_REPETITIONS = 2
 
     for size in SIZES:
+        print(f"Generating file with random numbers for size {size}")
         generate_file(size)
-        print(f"Size: {size}")
+        print()
         for O_level in O_LEVELS:
             for task_size in TASK_SIZES:
-                avg_time = make_measures(
-                    1, O_level, task_size, N_REPETITIONS, "parallel")
+                avg_time, std_time = avg_measure(
+                    1, O_level, task_size, N_REPETITIONS, "serial")
                 print(
-                    f"avg_time for serial execution, O{O_level} optimization, task size {task_size} = {avg_time}")
+                    f"SIZE {size}, O{O_level} optimization, task size {task_size}, serial execution. AVG_TIME: {avg_time}, STD_TIME {std_time}\n")
                 for num_threads in NUMS_THREADS:
-                    avg_time = make_measures(
+                    avg_time, stdtime = avg_measure(
                         num_threads, O_level, task_size, N_REPETITIONS)
                     print(
-                        f"avg_time for {num_threads} threads, O{O_level} optimization, task size {task_size} = {avg_time}")
+                        f"SIZE {size}, O{O_level} optimization, task size {task_size}, {num_threads} threads. AVG_TIME: {avg_time}, STD_TIME {stdtime}\n")
 
 
 if __name__ == "__main__":
