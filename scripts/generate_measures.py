@@ -66,6 +66,14 @@ def print_progress(size, O_level, task_size, avg_time, std_time, num_threads=Non
     print(f"SIZE {size}, O{O_level} optimization, task size {task_size}, serial execution. AVG_TIME: {avg_time}, STD_TIME {std_time}\n")
 
 
+def write_table(header, rows, path, verbose=False):
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    with open(path, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile, delimiter=";")
+        writer.writerow(header)
+        writer.writerows(rows)
+
+
 def main():
     SIZES = [int(a) for a in [1e4, 1e5, 1e6]]
     NUMS_THREADS = [1, 2, 4, 8, 16, 32]
@@ -73,8 +81,8 @@ def main():
     TASK_SIZES = [50, 100, 200, 400, 800]
     N_REPETITIONS = 2
     MEASURES_DIR = 'measures'
+    fieldnames = ['execution', 'threads', 'time', 'std deviation', 'speedup', 'efficiency']
 
-    # TODO Refactor filesave
     shutil.rmtree(MEASURES_DIR)
     for size in SIZES:
         print(f"Generating file with random numbers for size {size}")
@@ -82,23 +90,18 @@ def main():
         print()
         for O_level in O_LEVELS:
             for task_size in TASK_SIZES:
-                dirname = f"{MEASURES_DIR}/SIZE_{size}/O{O_level}"
-                Path(dirname).mkdir(parents=True, exist_ok=True)
+                rows, path = [], f"{MEASURES_DIR}/SIZE_{size}/O{O_level}/TASKSIZE_{task_size}.csv"
+                serial_avg_time, std_time = avg_measure(1, O_level, task_size, N_REPETITIONS, "serial")
+                print_progress(size, O_level, task_size, serial_avg_time, std_time)
+                rows.append(['serial', 1, serial_avg_time, std_time, 1, 1])
+                for num_threads in NUMS_THREADS:
+                    avg_time, std_time = avg_measure(num_threads, O_level, task_size, N_REPETITIONS)
+                    print_progress(size, O_level, task_size, avg_time, std_time, num_threads)
+                    speedup = serial_avg_time/avg_time
+                    efficiency = speedup/num_threads
+                    rows.append(['parallel', num_threads, avg_time, std_time, round(speedup, 4), round(efficiency, 4)])
 
-                with open(f"{dirname}/TASKSIZE_{task_size}.csv", 'w', newline='') as csvfile:
-                    writer = csv.writer(csvfile, delimiter=";")
-                    fieldnames = ['execution', 'threads', 'time', 'std deviation', 'speedup', 'efficiency']
-                    writer.writerow(fieldnames)
-
-                    serial_avg_time, std_time = avg_measure(1, O_level, task_size, N_REPETITIONS, "serial")
-                    print_progress(size, O_level, task_size, serial_avg_time, std_time)
-                    writer.writerow(['serial', 1, serial_avg_time, std_time, 1, 1])
-                    for num_threads in NUMS_THREADS:
-                        avg_time, std_time = avg_measure(num_threads, O_level, task_size, N_REPETITIONS)
-                        print_progress(size, O_level, task_size, avg_time, std_time, num_threads)
-                        speedup = serial_avg_time/avg_time
-                        efficiency = speedup/num_threads
-                        writer.writerow(['parallel', num_threads, avg_time, std_time, round(speedup, 4), round(efficiency, 4)])
+                write_table(fieldnames, rows, path)
 
 
 if __name__ == "__main__":
