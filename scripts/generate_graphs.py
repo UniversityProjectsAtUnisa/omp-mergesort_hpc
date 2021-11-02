@@ -31,24 +31,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 import os
 import csv
-
-
-def get_list_of_files(dirname):
-    # create a list of file and sub directories
-    # names in the given directory
-    listOfFile = os.listdir(dirname)
-    allFiles = list()
-    # Iterate over all the entries
-    for entry in listOfFile:
-        # Create full path
-        fullPath = os.path.join(dirname, entry)
-        # If entry is a directory then get the list of files in this directory
-        if os.path.isdir(fullPath):
-            allFiles = allFiles + get_list_of_files(fullPath)
-        else:
-            allFiles.append(fullPath)
-
-    return allFiles
+from utils.utils import get_list_of_files
 
 
 def plot_from_table(table, save=True, name="", show_plot=False):
@@ -83,12 +66,13 @@ def plot_from_table(table, save=True, name="", show_plot=False):
 
 def main():
     paths = get_list_of_files("measures")
-    for path in paths:
+    jpgs = filter(lambda p: os.path.splitext(p)[1] == ".jpg", paths)
+    for path in jpgs:
         if os.path.splitext(path)[1] == ".jpg":
             os.remove(path)
 
-    paths = get_list_of_files("measures")
-    for path in paths:
+    csvs = filter(lambda p: os.path.splitext(p)[1] == ".csv", paths)
+    for path in csvs:
         with open(path, newline="") as csvfile:
             table = csv.reader(csvfile, delimiter=";")
             plot_from_table(list(table), name=os.path.splitext(path)[0]+'.jpg')
