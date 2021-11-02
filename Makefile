@@ -37,18 +37,25 @@ OMP.serial =
 O := 0
 TASK_SIZE := 100
 
-
+# Wildcard to commands recipe
+space := #
+space +=
+semicolon := ;
 
 IDIR = include
 SRCDIR = src
 BUILDDIR = build
+TESTDIR = test
 EXECUTABLE = main.out
 
 CC = gcc
 OMP = ${OMP.${EXECUTION}}
 CFLAGS = ${flags.${BUILD}} -I$(IDIR) $(OMP)
-LDFLAGS = $(OMP)
+LDFLAGS = ${OMP.parallel}
 
+TESTS = $(wildcard $(TESTDIR)/*.c)
+TEST_OBJECTS = $(patsubst $(TESTDIR)/%.c,$(TESTDIR)/$(BUILDDIR)/%.o,$(TESTS))
+TEST_EXECUTABLES = $(patsubst %.o,%.out,$(TEST_OBJECTS))
 SOURCES = $(wildcard $(SRCDIR)/*.c)
 OBJECTS = $(patsubst $(SRCDIR)/%.c,$(BUILDDIR)/%.o,$(SOURCES))
 DEPS = $(wildcard $(IDIR)/*.h)
@@ -60,6 +67,10 @@ all: dir $(BUILDDIR)/$(EXECUTABLE)
 dir:
 	mkdir -p $(BUILDDIR)
 
+.PHONY: test_dir
+test_dir:
+	mkdir -p $(TESTDIR)/$(BUILDDIR)
+
 $(BUILDDIR)/$(EXECUTABLE): $(OBJECTS)
 	$(CC) $^ -o $@ $(LDFLAGS) 
 
@@ -68,14 +79,25 @@ $(OBJECTS): $(BUILDDIR)/%.o: $(SRCDIR)/%.c $(DEPS)
 
 .PHONY: clean
 clean:
-	rm -f $(BUILDDIR)/*.o $(BUILDDIR)/$(EXECUTABLE)
+	rm -f $(BUILDDIR)/*.o $(BUILDDIR)/$(EXECUTABLE) $(TESTDIR)/$(BUILDDIR)/*.o $(TESTDIR)/$(BUILDDIR)/*.out
 
 .PHONY: run
 run: dir $(BUILDDIR)/$(EXECUTABLE)
 	$(BUILDDIR)/$(EXECUTABLE) $(TASK_SIZE)
 
+# Run all tests
+.PHONY: test
+test: test_dir dir $(TEST_EXECUTABLES)
+	$(subst $(space),$(semicolon),$(TEST_EXECUTABLES)) 
+
+$(TEST_EXECUTABLES): $(TESTDIR)/$(BUILDDIR)/%.out: $(TESTDIR)/$(BUILDDIR)/%.o $(BUILDDIR)/%.o
+	$(CC) $^ -o $@ $(LDFLAGS)
+
+$(TESTDIR)/$(BUILDDIR)/%.o: $(TESTDIR)/%.c
+	$(CC) -c -O2 $< -o $@ $(CFLAGS)
+
 .PHONY: measures
 measures:
-	scripts/generate_measures.py
-	scripts/generate_graphs.py
-	scripts/generate_tables.py
+	python3 scripts/generate_measures.py
+	python3 scripts/generate_graphs.py
+	python3 scripts/generate_tables.py
