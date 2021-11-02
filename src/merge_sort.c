@@ -40,7 +40,7 @@ void merge_sort(int *X, int n, int *tmp, int task_size)
     merge_sort(X, n / 2, tmp, task_size);
 
 #pragma omp task shared(X) if (n >= task_size)
-    merge_sort(X + (n / 2), n - (n / 2), tmp + n / 2, task_size);
+    merge_sort(X + n / 2, n - n / 2, tmp + n / 2, task_size);
 
 #pragma omp taskwait
     merge(X, n / 2, X + n / 2, n - n / 2, tmp);
@@ -55,42 +55,25 @@ void merge(int *X, int n, int *Y, int m, int *tmp)
         if (X[i] < Y[j])
         {
             tmp[i + j] = X[i];
-            printf("i+j: %20d, tmp[i+j]: %20d, i:%20d, X[i]: %20d, j:%20d, Y[j]: %20d\n", i + j, tmp[i + j], i, X[i], j, Y[j]);
             i++;
         }
         else
         {
             tmp[i + j] = Y[j];
-            printf("i+j: %20d, tmp[i+j]: %20d, i:%20d, X[i]: %20d, j:%20d, Y[j]: %20d\n", i + j, tmp[i + j], i, X[i], j, Y[j]);
             j++;
         }
     }
+
     while (i < n)
     {
         tmp[i + j] = X[i];
-        printf("i+j: %20d, tmp[i+j]: %20d, i:%20d, X[i]: %20d, j:%20d, Y[j]: %20d\n", i + j, tmp[i + j], i, X[i], j, Y[j]);
         i++;
     }
+
     while (j < m)
     {
         tmp[i + j] = Y[j];
-        printf("i+j: %20d, tmp[i+j]: %20d, i:%20d, X[i]: %20d, j:%20d, Y[j]: %20d\n", i + j, tmp[i + j], i, X[i], j, Y[j]);
         j++;
     }
-
-    for (size_t z = 0; z < i+j; z++)
-    {
-        printf("X[%d]: %d\n", z, X[z]);
-    }
-    for (size_t z = 0; z < i+j; z++)
-    {
-        printf("tmp[%d]: %d\n", z, tmp[z]);
-    }
-    
     memcpy(X, tmp, (i + j) * sizeof(int));
-
-    for (size_t z = 0; z < i+j; z++)
-    {
-        printf("X[%d]: %d\n", z, X[z]);
-    }
 }
