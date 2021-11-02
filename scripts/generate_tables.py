@@ -30,30 +30,7 @@ along with OMP Mergesort implementation.  If not, see <http: //www.gnu.org/licen
 import os
 from utils.utils import get_list_of_files, HiddenErrors
 import pandas as pd
-from pandas.plotting import table
-import matplotlib.pyplot as plt
 import dataframe_image as dfi
-from functools import partial
-
-
-# def main():
-#     paths = get_list_of_files("measures")
-#     pngs = filter(lambda p: os.path.splitext(p)[1] == ".png", paths)
-#     csvs = filter(lambda p: os.path.splitext(p)[1] == ".csv", paths)
-#     for path in pngs:
-#         if os.path.splitext(path)[1] == ".png":
-#             os.remove(path)
-
-#     for path in csvs:
-#         df = pd.read_csv(path, delimiter=";")
-
-#         _, ax = plt.subplots(figsize=(12, 8))
-#         ax = plt.subplot(111, frame_on=False)  # no visible frame
-#         ax.xaxis.set_visible(False)  # hide the x axis
-#         ax.yaxis.set_visible(False)  # hide the y axis
-#         table(ax, df)  # where df is your data frame
-#         plt.savefig(os.path.splitext(path)[0]+'.png', bbox_inches='tight')
-#         plt.close()
 
 
 def main():
