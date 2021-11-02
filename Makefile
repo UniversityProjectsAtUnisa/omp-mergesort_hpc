@@ -73,3 +73,9 @@ clean:
 .PHONY: run
 run: dir $(BUILDDIR)/$(EXECUTABLE)
 	$(BUILDDIR)/$(EXECUTABLE) $(TASK_SIZE)
+
+.PHONY: measures
+measures:
+	scripts/generate_measures.py
+	scripts/generate_graphs.py
+	scripts/generate_tables.py
