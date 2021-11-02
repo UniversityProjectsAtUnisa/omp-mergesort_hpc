@@ -81,9 +81,9 @@ def main():
     TASK_SIZES = [50, 100, 200, 400, 800]
     N_REPETITIONS = 2
     MEASURES_DIR = 'measures'
-    fieldnames = ['execution', 'threads', 'time', 'std deviation', 'speedup', 'efficiency']
+    fieldnames = ['execution', 'threads', 'time', 'stdev', 'speedup', 'efficiency']
 
-    shutil.rmtree(MEASURES_DIR)
+    shutil.rmtree(MEASURES_DIR, ignore_errors=True)
     for size in SIZES:
         print(f"Generating file with random numbers for size {size}")
         generate_file(size)
