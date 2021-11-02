@@ -30,7 +30,7 @@
 
 #include <time.h>
 
-#define DEBUG 0
+#define DEBUG 1
 #define FILENAME "input/in.txt"
 
 #define STARTTIME(id)                             \

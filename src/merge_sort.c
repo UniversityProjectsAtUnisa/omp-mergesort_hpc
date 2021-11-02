@@ -22,6 +22,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * 
+ * 
  * You should have received a copy of the GNU General Public License
  * along with OMP Mergesort implementation.  If not, see <http: //www.gnu.org/licenses/>.
  */
@@ -42,41 +43,54 @@ void merge_sort(int *X, int n, int *tmp, int task_size)
     merge_sort(X + (n / 2), n - (n / 2), tmp + n / 2, task_size);
 
 #pragma omp taskwait
-    merge(X, n, tmp);
+    merge(X, n / 2, X + n / 2, n - n / 2, tmp);
 }
 
-void merge(int *X, int n, int *tmp)
+void merge(int *X, int n, int *Y, int m, int *tmp)
 {
-    int i = 0;
-    int j = n / 2;
-    int ti = 0;
+    int i = 0, j = 0;
 
-    while (i < n / 2 && j < n)
+    while (i < n && j < m)
     {
-        if (X[i] < X[j])
+        if (X[i] < Y[j])
         {
-            tmp[ti] = X[i];
-            ti++;
+            tmp[i + j] = X[i];
+            printf("i+j: %20d, tmp[i+j]: %20d, i:%20d, X[i]: %20d, j:%20d, Y[j]: %20d\n", i + j, tmp[i + j], i, X[i], j, Y[j]);
             i++;
         }
         else
         {
-            tmp[ti] = X[j];
-            ti++;
+            tmp[i + j] = Y[j];
+            printf("i+j: %20d, tmp[i+j]: %20d, i:%20d, X[i]: %20d, j:%20d, Y[j]: %20d\n", i + j, tmp[i + j], i, X[i], j, Y[j]);
             j++;
         }
     }
-    while (i < n / 2)
-    { /* finish up lower half */
-        tmp[ti] = X[i];
-        ti++;
+    while (i < n)
+    {
+        tmp[i + j] = X[i];
+        printf("i+j: %20d, tmp[i+j]: %20d, i:%20d, X[i]: %20d, j:%20d, Y[j]: %20d\n", i + j, tmp[i + j], i, X[i], j, Y[j]);
         i++;
     }
-    while (j < n)
-    { /* finish up upper half */
-        tmp[ti] = X[j];
-        ti++;
+    while (j < m)
+    {
+        tmp[i + j] = Y[j];
+        printf("i+j: %20d, tmp[i+j]: %20d, i:%20d, X[i]: %20d, j:%20d, Y[j]: %20d\n", i + j, tmp[i + j], i, X[i], j, Y[j]);
         j++;
     }
-    memcpy(X, tmp, n * sizeof(int));
+
+    for (size_t z = 0; z < i+j; z++)
+    {
+        printf("X[%d]: %d\n", z, X[z]);
+    }
+    for (size_t z = 0; z < i+j; z++)
+    {
+        printf("tmp[%d]: %d\n", z, tmp[z]);
+    }
+    
+    memcpy(X, tmp, (i + j) * sizeof(int));
+
+    for (size_t z = 0; z < i+j; z++)
+    {
+        printf("X[%d]: %d\n", z, X[z]);
+    }
 }
