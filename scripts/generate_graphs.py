@@ -66,7 +66,6 @@ def plot_from_table(table, save=True, name="", show_plot=False):
     y = list(map(float, y))
     ax.plot(x, y, 'ro-', label='Experimental')
     ax.plot(x, x, color='blue', label='Ideal')
-    # same as y_th, bisection
     plt.style.use('seaborn-whitegrid')
 
     plt.autoscale(enable=True, axis='x', tight=True)
