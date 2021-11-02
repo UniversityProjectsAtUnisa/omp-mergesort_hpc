@@ -37,7 +37,7 @@
 
 #include "merge_sort.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   DEBUG_PRINT("argc: %d\n", argc);
   int task_size = (argc > 1) ? atoi(argv[1]) : 100;
   DEBUG_PRINT("task_size: %d\n", task_size);
@@ -48,15 +48,16 @@ int main(int argc, char *argv[]) {
 
   debug_print_array(arr, n);
 
-  double time_merge;
-  STARTTIME(1);
+  omp_set_dynamic(0);
+
+  double end, start = omp_get_wtime();
 #pragma omp parallel
   {
 #pragma omp single
     merge_sort(arr, n, temp, task_size);
   }
-  ENDTIME(1, time_merge);
-  printf("%f", time_merge);
+  end = omp_get_wtime();
+  printf("%f", end - start);
   debug_print_array(arr, n);
 
   free(arr);
@@ -64,8 +65,8 @@ int main(int argc, char *argv[]) {
   return EXIT_SUCCESS;
 }
 
-void read_file(int **arr, size_t *n) {
-  FILE *fp;
+void read_file(int** arr, size_t* n) {
+  FILE* fp;
   if ((fp = fopen(FILENAME, "r")) == NULL) {
     DEBUG_PUTS("Input file not found");
     exit(EXIT_FAILURE);
@@ -85,7 +86,7 @@ void read_file(int **arr, size_t *n) {
   fclose(fp);
 }
 
-void debug_print_array(int *arr, size_t size) {
+void debug_print_array(int* arr, size_t size) {
   if (DEBUG) {
     for (size_t i = 0; i < size; i++) {
       printf("%d\n", arr[i]);
