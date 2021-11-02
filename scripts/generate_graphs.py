@@ -34,7 +34,7 @@ import csv
 from utils.utils import get_list_of_files
 
 
-def plot_from_table(table, save=True, name="", show_plot=False):
+def plot_from_table(table, save=True, name=""):
     if save and not name:
         raise Exception("No filename to save file")
 
@@ -57,8 +57,6 @@ def plot_from_table(table, save=True, name="", show_plot=False):
     plt.legend()
     plt.xlabel("Processors")
     plt.ylabel("Speedup")
-    if show_plot:
-        plt.show()
     if save:
         plt.savefig(name)
     plt.close()
