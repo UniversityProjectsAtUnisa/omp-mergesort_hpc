@@ -68,19 +68,21 @@ def plot_from_table(table, save=True, name=""):
         y.append(row[speedup_pos])
 
     _, ax = plt.subplots(figsize=(12, 8))
+    x = list(map(float, x))
     y = list(map(float, y))
     # Real Speedup against number of threads
     ax.plot(x, y, 'ro-', label='Experimental')
     # Ideal speedup against number of threads
     ax.plot(x, x, color='blue', label='Ideal')
     plt.style.use('seaborn-whitegrid')
-
+    plt.grid(True)
     plt.autoscale(enable=True, axis='x', tight=True)
     plt.autoscale(enable=True, axis='y', tight=True)
 
     plt.legend()
     plt.xlabel("Processors")
     plt.ylabel("Speedup")
+
     if save:
         plt.savefig(name)
     plt.close()
