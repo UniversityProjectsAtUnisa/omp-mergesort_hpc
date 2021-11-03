@@ -34,8 +34,35 @@
 #define TASK_SIZE 100
 
 #define merge_sort(X, n) merge_sort_tasksize(X, n, TASK_SIZE);
-void merge_sort_tasksize(int *X, int n, int task_size);
-void merge_sort_aux(int *X, int n, int *tmp, int task_size);
-void merge(int *X, int n, int *Y, int m, int *tmp);
+
+/**
+ * @brief Merge sorts an array with parallel programming using a minimum task size
+ * 
+ * @param arr the array to be sorted
+ * @param size the size of the array
+ * @param task_size the minimum task size to create a new task
+ */
+void merge_sort_tasksize(int *arr, int size, int task_size);
+
+/**
+ * @brief Utility used by merge_sort_tasksize to implement the merge sort
+ * 
+ * @param arr the array to be sorted
+ * @param size the size of the array
+ * @param tmp the temporary array to implement the algorithm
+ * @param task_size the minimum task size to create a new task
+ */
+void _merge_sort_aux(int *arr, int size, int *tmp, int task_size);
+
+/**
+ * @brief Utility used by _merge_sort_aux to implement the merging part in the merge sort
+ * 
+ * @param arr1 the first array to be merged
+ * @param size1 the size of the first array
+ * @param arr2 the second array to be merged
+ * @param size2 the size of the second array
+ * @param tmp the temporary array to implement the algorithm
+ */
+void _merge(int *arr1, int size1, int *arr2, int size2, int *tmp);
 
 #endif  // _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MERGE_SORT_H_

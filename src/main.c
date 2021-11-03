@@ -56,11 +56,11 @@ int main(int argc, char* argv[]) {
   DEBUG_PRINT("argc: %d\n", argc);
   int task_size = (argc > 1) ? atoi(argv[1]) : TASK_SIZE;
   DEBUG_PRINT("task_size: %d\n", task_size);
-  size_t n;
+  size_t size;
   int *arr;
-  read_file(&arr, &n);
+  read_file(&arr, &size);
 
-  debug_print_array(arr, n);
+  debug_print_array(arr, size);
 
   omp_set_dynamic(0);
 
@@ -68,43 +68,49 @@ int main(int argc, char* argv[]) {
 #pragma omp parallel
   {
 #pragma omp single
-    merge_sort_tasksize(arr, n, task_size);
+    merge_sort_tasksize(arr, size, task_size);
   }
   end = omp_get_wtime();
   printf("%f", end - start);
-  debug_print_array(arr, n);
+  debug_print_array(arr, size);
 
   free(arr);
   return EXIT_SUCCESS;
 }
 
 /**
- * @brief Allocates and populates and array with data in file FILENAME
+ * @brief Allocates and populates an array with data in file FILENAME
  * 
- * @param arr 
- * @param n 
+ * @param arr the array to be filled with the data from the file FILENAME
+ * @param size the size of the array
  */
-void read_file(int** arr, size_t* n) {
+void read_file(int** arr, size_t* size) {
   FILE* fp;
   if ((fp = fopen(FILENAME, "r")) == NULL) {
     DEBUG_PUTS("Input file not found");
     exit(EXIT_FAILURE);
   }
 
-  fscanf(fp, "%ld\n", n);
-  *arr = malloc(*n * sizeof(int));
+  fscanf(fp, "%ld\n", size);
+  *arr = malloc(*size * sizeof(int));
   if (*arr == NULL) {
     DEBUG_PUTS("Memory could not be allocated");
     exit(EXIT_FAILURE);
   }
 
   DEBUG_PUTS("Reading from file...");
-  for (size_t i = 0; i < *n; i++) {
+  for (size_t i = 0; i < *size; i++) {
     fscanf(fp, "%d", &(*arr)[i]);
   }
   fclose(fp);
 }
 
+/**
+ * @brief Print for debug of the elements of an array
+ * 
+ * @param arr the array to be printed
+ * @param size the size of the array
+ */
 void debug_print_array(int* arr, size_t size) {
   if (DEBUG) {
     for (size_t i = 0; i < size; i++) {
