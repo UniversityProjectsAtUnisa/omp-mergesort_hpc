@@ -31,24 +31,36 @@ import sys
 
 
 def get_list_of_files(dirname):
-    # create a list of file and sub directories
+    """Creates a list of paths to files in the directory dirname
+
+    Args:
+        dirname (str): the name of the directory to scan
+
+    Returns:
+        list of str: the list of paths to files in the directory
+    """
+    # creates a list of files and sub directories
     # names in the given directory
     listOfFile = os.listdir(dirname)
+
     allFiles = list()
-    # Iterate over all the entries
     for entry in listOfFile:
-        # Create full path
+        # creates full path
         fullPath = os.path.join(dirname, entry)
-        # If entry is a directory then get the list of files in this directory
+        # if it's a directory then get the list of files in this directory
         if os.path.isdir(fullPath):
             allFiles = allFiles + get_list_of_files(fullPath)
         else:
+            # accumulates the filenames
             allFiles.append(fullPath)
 
     return allFiles
 
 
 class HiddenErrors:
+    """
+    Context to hide error of wrapped functions and methods
+    """
     def __enter__(self):
         self._original_stderr = sys.stderr
         sys.stderr = open(os.devnull, 'w')

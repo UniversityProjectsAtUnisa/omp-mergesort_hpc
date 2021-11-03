@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!venv/bin/python3
 '''
 Course: High Performance Computing 2020/2021
 
@@ -27,6 +27,10 @@ You should have received a copy of the GNU General Public License
 along with OMP Mergesort implementation.  If not, see <http: //www.gnu.org/licenses/>.
 '''
 
+"""
+Generates table images for acquired performance data in csv files
+"""
+
 import os
 from utils.utils import get_list_of_files, HiddenErrors
 import pandas as pd
@@ -34,17 +38,22 @@ import dataframe_image as dfi
 
 
 def main():
+    # Deletes old tables
     paths = get_list_of_files("measures")
     pngs = filter(lambda p: os.path.splitext(p)[1] == ".png", paths)
     for path in pngs:
         if os.path.splitext(path)[1] == ".png":
             os.remove(path)
 
+    # Generates table images
     csvs = filter(lambda p: os.path.splitext(p)[1] == ".csv", paths)
     for path in csvs:
         df = pd.read_csv(path, delimiter=";")
         styled_df = df.style.hide_index()
+
+        # Hides font logs
         with HiddenErrors():
+            # Exports the image
             dfi.export(styled_df, os.path.splitext(path)[0]+'.png', table_conversion="matplotlib", max_cols=6)
 
 

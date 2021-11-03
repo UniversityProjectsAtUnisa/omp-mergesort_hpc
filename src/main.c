@@ -28,6 +28,14 @@
  * //www.gnu.org/licenses/>.
  */
 
+/**
+ * @file main.c
+ * @brief measures the execution time of a parallel implementation of the merge_sort algorithm
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #include "main.h"
 
 #include <omp.h>
@@ -37,14 +45,20 @@
 
 #include "merge_sort.h"
 
+/**
+ * @brief calls and measure the execution time of merge_sort function
+ * 
+ * @param argc numbers of arguments
+ * @param argv arguments. Accept task_size as first argument. Defaults to 100.
+ * @return int status code
+ */
 int main(int argc, char* argv[]) {
   DEBUG_PRINT("argc: %d\n", argc);
-  int task_size = (argc > 1) ? atoi(argv[1]) : 100;
+  int task_size = (argc > 1) ? atoi(argv[1]) : TASK_SIZE;
   DEBUG_PRINT("task_size: %d\n", task_size);
   size_t n;
-  int *arr, *temp;
+  int *arr;
   read_file(&arr, &n);
-  temp = malloc(n * sizeof(int));
 
   debug_print_array(arr, n);
 
@@ -54,17 +68,22 @@ int main(int argc, char* argv[]) {
 #pragma omp parallel
   {
 #pragma omp single
-    merge_sort(arr, n, temp, task_size);
+    merge_sort_tasksize(arr, n, task_size);
   }
   end = omp_get_wtime();
   printf("%f", end - start);
   debug_print_array(arr, n);
 
   free(arr);
-  free(temp);
   return EXIT_SUCCESS;
 }
 
+/**
+ * @brief Allocates and populates and array with data in file FILENAME
+ * 
+ * @param arr 
+ * @param n 
+ */
 void read_file(int** arr, size_t* n) {
   FILE* fp;
   if ((fp = fopen(FILENAME, "r")) == NULL) {

@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!venv/bin/python3
 '''
 Course: High Performance Computing 2020/2021
 
@@ -27,6 +27,10 @@ You should have received a copy of the GNU General Public License
 along with OMP Mergesort implementation.  If not, see <http: //www.gnu.org/licenses/>.
 '''
 
+"""
+Generates performance graphs against the number of threads
+"""
+
 from matplotlib import pyplot as plt
 import numpy as np
 import os
@@ -35,19 +39,39 @@ from utils.utils import get_list_of_files
 
 
 def plot_from_table(table, save=True, name=""):
+    """Plots two lines representing ideal and actual performances for a given tabel
+    and exports it to file name
+
+    Args:
+        table (list of list): Speedup table. The first list contains the header. 
+                The other rows contain the values for different modes of 
+                executions and amount of threads.
+        save (bool, optional): If the table must be saved. Defaults to True.
+        name (str, optional): File to save the plot to. Defaults to "".
+
+    Raises:
+        Exception: If save is True and name is not given
+    """
     if save and not name:
         raise Exception("No filename to save file")
 
+    # First elements are zeroes to show axis intersection in the plot
     x, y = [0], [0]
     thread_pos = table[0].index("threads")
     speedup_pos = table[0].index("speedup")
+
+    # The row 0 contains the header
+    # The row 1 contains the serial execution
+    # We are interested in the speedups for the parallel execution
     for row in table[2:]:
         x.append(row[thread_pos])
         y.append(row[speedup_pos])
 
     _, ax = plt.subplots(figsize=(12, 8))
     y = list(map(float, y))
+    # Real Speedup against number of threads
     ax.plot(x, y, 'ro-', label='Experimental')
+    # Ideal speedup against number of threads
     ax.plot(x, x, color='blue', label='Ideal')
     plt.style.use('seaborn-whitegrid')
 
@@ -63,12 +87,14 @@ def plot_from_table(table, save=True, name=""):
 
 
 def main():
+    # Deletes old plots
     paths = get_list_of_files("measures")
     jpgs = filter(lambda p: os.path.splitext(p)[1] == ".jpg", paths)
     for path in jpgs:
         if os.path.splitext(path)[1] == ".jpg":
             os.remove(path)
 
+    # Generates new plots
     csvs = filter(lambda p: os.path.splitext(p)[1] == ".csv", paths)
     for path in csvs:
         with open(path, newline="") as csvfile:

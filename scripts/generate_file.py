@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!venv/bin/python3
 '''
 Course: High Performance Computing 2020/2021
 
@@ -27,27 +27,44 @@ You should have received a copy of the GNU General Public License
 along with OMP Mergesort implementation.  If not, see <http: //www.gnu.org/licenses/>.
 '''
 
+"""
+Generates an input file of random numbers
+"""
+
 import argparse
 import random
 from tqdm import tqdm
 from pathlib import Path
 
-parser = argparse.ArgumentParser(description='Process some integers.')
+parser = argparse.ArgumentParser(description='Generate fixed amount of random integers and saves it in the INPUT file')
 parser.add_argument('N', metavar='N', type=int,
                     help='the amount of numbers to be generated')
 parser.add_argument('--max', dest='max', default=2**31 - 1,
-                    help='maximum number that can be generated')
+                    help="""maximum number that can be generated;
+                    default: 2**31 - 1""")
 parser.add_argument('--min', dest='min',
                     help="""minimum number that can be generated;
                     default: -max
                     """)
 parser.add_argument('--input', dest='input', default="input/in.txt",
-                    help="input file name")
+                    help="""input file name;
+                    default: 2**31 - 1""")
 
 
 def generate_file(N, min_value=None, max_value=2**31 - 1, filename="input/in.txt"):
+    """Generates N integers between min_value and max_value and exports the results in the file filename
+
+    Args:
+        N (int): Amount of integers to be generated
+        min_value (int, optional): Minimum number that can be generated. Defaults to -max_value.
+        max_value (int, optional): Maximum number that can be generated. Defaults to 2**31-1.
+        filename (str, optional): Name of the file to export to. Defaults to "input/in.txt".
+    """
+    if N < 0:
+        return
     min_value = min_value if min_value is not None else -max_value
-    
+
+    # Before generating creates the parent folder if doesn't already exist
     Path(filename).parent.mkdir(parents=True, exist_ok=True)
     with open(filename, "w") as f:
         f.write(str(N)+"\n")
