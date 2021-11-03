@@ -48,6 +48,7 @@ BUILDDIR = build
 TESTDIR = test
 EXECUTABLE = main.out
 
+PIP_REQUIREMENTS = requirements.txt
 CC = gcc
 OMP = ${OMP.${EXECUTION}}
 CFLAGS = ${flags.${BUILD}} -I$(IDIR) $(OMP)
@@ -61,7 +62,7 @@ OBJECTS = $(patsubst $(SRCDIR)/%.c,$(BUILDDIR)/%.o,$(SOURCES))
 DEPS = $(wildcard $(IDIR)/*.h)
 
 .PHONY: all
-all: dir $(BUILDDIR)/$(EXECUTABLE) 
+all: dir $(BUILDDIR)/$(EXECUTABLE) $(TEST_EXECUTABLES)
 
 .PHONY: dir
 dir:
@@ -74,7 +75,7 @@ test_dir:
 $(BUILDDIR)/$(EXECUTABLE): $(OBJECTS)
 	$(CC) $^ -o $@ $(LDFLAGS) 
 
-$(OBJECTS): $(BUILDDIR)/%.o: $(SRCDIR)/%.c $(DEPS)
+$(OBJECTS): $(BUILDDIR)/%.o: $(SRCDIR)/%.c $(DEPS) $(MAKEFILE_LIST)
 	$(CC) -c -O$(O) $< -o $@ $(CFLAGS)
 
 .PHONY: clean
@@ -93,11 +94,16 @@ test: test_dir dir $(TEST_EXECUTABLES)
 $(TEST_EXECUTABLES): $(TESTDIR)/$(BUILDDIR)/%.out: $(TESTDIR)/$(BUILDDIR)/%.o $(BUILDDIR)/%.o
 	$(CC) $^ -o $@ $(LDFLAGS)
 
-$(TESTDIR)/$(BUILDDIR)/%.o: $(TESTDIR)/%.c
+$(TESTDIR)/$(BUILDDIR)/%.o: $(TESTDIR)/%.c $(MAKEFILE_LIST)
 	$(CC) -c -O2 $< -o $@ $(CFLAGS)
 
 .PHONY: measures
-measures:
-	python3 scripts/generate_measures.py
-	python3 scripts/generate_graphs.py
-	python3 scripts/generate_tables.py
+measures: $(MAKEFILE_LIST)
+	python3 -m venv venv
+	( \
+       . venv/bin/activate; \
+       pip install -r $(PIP_REQUIREMENTS); \
+	$(PYTHON) scripts/generate_measures.py; \
+	$(PYTHON) scripts/generate_graphs.py; \
+	$(PYTHON) scripts/generate_tables.py; \
+    )
