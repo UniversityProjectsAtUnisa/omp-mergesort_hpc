@@ -32,16 +32,24 @@
 #include "merge_sort.h"
 
 #include <omp.h>
+#include <stdlib.h>
 #include <string.h>
 
-void merge_sort(int *X, int n, int *tmp, int task_size) {
+void merge_sort_tasksize(int *X, int n, int task_size) {
+  if (n < 0) return;
+  int *tmp = malloc(n * sizeof(int));
+  merge_sort_aux(X, n, tmp, task_size);
+  free(tmp);
+}
+
+void merge_sort_aux(int *X, int n, int *tmp, int task_size) {
   if (n < 2) return;
 
 #pragma omp task shared(X) if (n >= task_size)
-  merge_sort(X, n / 2, tmp, task_size);
+  merge_sort_aux(X, n / 2, tmp, task_size);
 
 #pragma omp task shared(X) if (n >= task_size)
-  merge_sort(X + n / 2, n - n / 2, tmp + n / 2, task_size);
+  merge_sort_aux(X + n / 2, n - n / 2, tmp + n / 2, task_size);
 
 #pragma omp taskwait
   merge(X, n / 2, X + n / 2, n - n / 2, tmp);

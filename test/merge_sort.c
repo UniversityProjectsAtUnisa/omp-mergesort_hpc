@@ -50,11 +50,20 @@ int _equals_with_stackarr(int *heap_array, int *stack_array, int size) {
 }
 
 void _test_merge_sort(int *stack_arr, int *solution, int size) {
-  int *temp = malloc(size * sizeof(int));
   int *arr = malloc(size * sizeof(int));
   _load_from_stackarr(arr, stack_arr, size);
 
-  merge_sort(arr, size, temp, 100);
+  merge_sort(arr, size);
+  assert(_equals_with_stackarr(arr, solution, size) == 1);
+  assert(_is_sorted(arr, size) == 1);
+}
+
+void _test_merge_sort_tasksize(int *stack_arr, int *solution, int size,
+                               int task_size) {
+  int *arr = malloc(size * sizeof(int));
+  _load_from_stackarr(arr, stack_arr, size);
+
+  merge_sort_tasksize(arr, size, task_size);
   assert(_equals_with_stackarr(arr, solution, size) == 1);
   assert(_is_sorted(arr, size) == 1);
 }
@@ -131,6 +140,26 @@ void test_ordered() {
   _test_merge_sort(stack_arr, solution, size);
 }
 
+void test_fail_n() {
+  int size = 5;
+  int stack_arr[5] = {-3, -2, 1, 5, 6};
+
+  int *arr = malloc(size * sizeof(int));
+  _load_from_stackarr(arr, stack_arr, size);
+
+  merge_sort(arr, -2);
+  assert(_equals_with_stackarr(arr, stack_arr, size) == 1);
+}
+
+void test_explicit_tasksize() {
+  int size = 5;
+  int stack_arr[5] = {5, -1, 4, 2, -6};
+  int solution[5] = {-6, -1, 2, 4, 5};
+  int task_size = 200;
+
+  _test_merge_sort_tasksize(stack_arr, solution, size, task_size);
+}
+
 int main(int argc, char const *argv[]) {
   test_empty_array();
   test_one_element();
@@ -141,5 +170,7 @@ int main(int argc, char const *argv[]) {
   test_full_positive();
   test_full_negative();
   test_ordered();
+  test_fail_n();
+  test_explicit_tasksize();
   return 0;
 }
