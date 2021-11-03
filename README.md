@@ -1,7 +1,7 @@
 # Contest OMP
 
 Docs status:\
-[![Netlify Status](https://api.netlify.com/api/v1/badges/48091397-01e7-4783-ad50-3003d7ced228/deploy-status)](https://app.netlify.com/sites/contestomp/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/48091397-01e7-4783-ad50-3003d7ced228/deploy-status)](https://contestomp.netlify.app/)
 
 ## General Instructions
 
