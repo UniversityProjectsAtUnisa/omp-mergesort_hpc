@@ -21,13 +21,13 @@ To generate a file with random numbers run\
 `make generate_file [N=N[:10000]] [MAX=MAX[:2147483647]] [MIN=MIN[:-MAX]] [FILENAME=path/to/inputfile[:input/in.txt]]`
 
 To build and execute the source code run\
-`make run [FILENAME=path/to/inputfile[:input/in.txt]] [TASK_SIZE=TASK_SIZE[:100]]`
+`[OMP_NUM_THREADS=OMP_NUM_THREADS] make run [FILENAME=path/to/inputfile[:input/in.txt]] [TASK_SIZE=TASK_SIZE[:100]]`
 
 To build and execute *SILENTLY* the source code run\
 `make -s run [FILENAME=path/to/inputfile[:input/in.txt]] [TASK_SIZE=TASK_SIZE[:100]]`
 
 To generate a file with random numbers and execute a single run of the mergesort run\
-`make generate_file run [N=N[:10000]] [MAX=MAX[:2147483647]] [MIN=MIN[:-MAX]] [FILENAME=path/to/inputfile[:input/in.txt]] [TASK_SIZE=TASK_SIZE[:100]]`
+`[OMP_NUM_THREADS=OMP_NUM_THREADS] make generate_file run [N=N[:10000]] [MAX=MAX[:2147483647]] [MIN=MIN[:-MAX]] [FILENAME=path/to/inputfile[:input/in.txt]] [TASK_SIZE=TASK_SIZE[:100]]`
 
 ## Notes
 
