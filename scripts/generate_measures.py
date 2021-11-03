@@ -169,7 +169,7 @@ def main():
                 for num_threads in NUMS_THREADS:
                     avg_time, std_time = avg_measure(num_threads, O_level, task_size, N_REPETITIONS)
                     print_progress(size, O_level, task_size, avg_time, std_time, num_threads)
-                    speedup = serial_avg_time/avg_time
+                    speedup = serial_avg_time/avg_time if avg_time > 0 else 0
                     efficiency = speedup/num_threads
                     rows.append(['parallel', num_threads, avg_time, std_time, round(speedup, 4), round(efficiency, 4)])
 

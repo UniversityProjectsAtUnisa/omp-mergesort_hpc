@@ -38,14 +38,17 @@ import dataframe_image as dfi
 
 
 def main():
+    MEASURESDIR="measures"
     # Deletes old tables
-    paths = get_list_of_files("measures")
+    print("Deleting old tables")
+    paths = get_list_of_files(MEASURESDIR)
     pngs = filter(lambda p: os.path.splitext(p)[1] == ".png", paths)
     for path in pngs:
         if os.path.splitext(path)[1] == ".png":
             os.remove(path)
 
     # Generates table images
+    print("Generating new tables")
     csvs = filter(lambda p: os.path.splitext(p)[1] == ".csv", paths)
     for path in csvs:
         df = pd.read_csv(path, delimiter=";")
@@ -55,6 +58,7 @@ def main():
         with HiddenErrors():
             # Exports the image
             dfi.export(styled_df, os.path.splitext(path)[0]+'.png', table_conversion="matplotlib", max_cols=6)
+    print("Table generation complete")
 
 
 if __name__ == "__main__":

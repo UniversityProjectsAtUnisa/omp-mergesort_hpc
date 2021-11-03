@@ -8,6 +8,7 @@
         "120",
         "--experimental"
     ],
+    "C_Cpp.clang_format_style": "Google",
     "psi-header.templates": [
         {
             "language": "*",

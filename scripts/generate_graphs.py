@@ -87,19 +87,24 @@ def plot_from_table(table, save=True, name=""):
 
 
 def main():
+    MEASURESDIR="measures"
     # Deletes old plots
-    paths = get_list_of_files("measures")
+    paths = get_list_of_files(MEASURESDIR)
     jpgs = filter(lambda p: os.path.splitext(p)[1] == ".jpg", paths)
+    print("Deleting old plots")
     for path in jpgs:
         if os.path.splitext(path)[1] == ".jpg":
             os.remove(path)
 
     # Generates new plots
     csvs = filter(lambda p: os.path.splitext(p)[1] == ".csv", paths)
+    print("Generating new plots")
     for path in csvs:
         with open(path, newline="") as csvfile:
             table = csv.reader(csvfile, delimiter=";")
             plot_from_table(list(table), name=os.path.splitext(path)[0]+'.jpg')
+
+    print("Plot generation complete")
 
 
 if __name__ == "__main__":
