@@ -49,7 +49,7 @@
  * 
  * @param arr the array to be sorted
  * @param size the size of the array
- * @param task_size the minimum task size to create a new task
+ * @param task_size the maximum dimension of the array that can be processed by a single thread
  */
 void merge_sort_tasksize(int *arr, int size, int task_size) {
   if (size < 0) return;
@@ -65,7 +65,7 @@ void merge_sort_tasksize(int *arr, int size, int task_size) {
  * @param arr the array to be sorted
  * @param size the size of the array
  * @param tmp the temporary array to implement the algorithm
- * @param task_size the minimum task size to create a new task
+ * @param task_size the maximum dimension of the array that can be processed by a single thread
  */
 void _merge_sort_aux(int *arr, int size, int *tmp, int task_size) {
   if (size < 2) return;

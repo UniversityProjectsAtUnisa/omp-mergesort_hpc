@@ -36,6 +36,10 @@ OMP.parallel = -fopenmp
 OMP.serial =
 O := 0
 TASK_SIZE := 100
+FILENAME := input/in.txt
+N := 10000
+MAX := 2147483647
+MIN := -$(MAX)
 
 # Wildcard to commands recipe
 space := #
@@ -73,7 +77,7 @@ test_dir:
 	mkdir -p $(TESTDIR)/$(BUILDDIR)
 
 $(BUILDDIR)/$(EXECUTABLE): $(OBJECTS)
-	$(CC) $^ -o $@ $(LDFLAGS) 
+	$(CC) $^ -o $@ $(LDFLAGS)
 
 $(OBJECTS): $(BUILDDIR)/%.o: $(SRCDIR)/%.c $(DEPS) $(MAKEFILE_LIST)
 	$(CC) -c -O$(O) $< -o $@ $(CFLAGS)
@@ -84,7 +88,7 @@ clean:
 
 .PHONY: run
 run: dir $(BUILDDIR)/$(EXECUTABLE)
-	$(BUILDDIR)/$(EXECUTABLE) $(TASK_SIZE)
+	$(BUILDDIR)/$(EXECUTABLE) $(TASK_SIZE) $(FILENAME)
 
 # Run all tests
 .PHONY: test
@@ -96,6 +100,15 @@ $(TEST_EXECUTABLES): $(TESTDIR)/$(BUILDDIR)/%.out: $(TESTDIR)/$(BUILDDIR)/%.o $(
 
 $(TESTDIR)/$(BUILDDIR)/%.o: $(TESTDIR)/%.c $(MAKEFILE_LIST)
 	$(CC) -c -O2 $< -o $@ $(CFLAGS)
+
+.PHONY: generate_file
+generate_file: scripts/generate_file.py $(MAKEFILE_LIST)
+	python3 -m venv venv
+	( \
+       . venv/bin/activate; \
+       pip install -r $(PIP_REQUIREMENTS); \
+		$(PYTHON) scripts/generate_file.py $(N) --min $(MIN) --max $(MAX) --input $(FILENAME); \
+    )
 
 .PHONY: measures
 measures: $(MAKEFILE_LIST)

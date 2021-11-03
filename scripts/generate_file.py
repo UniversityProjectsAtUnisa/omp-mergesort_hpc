@@ -39,10 +39,10 @@ from pathlib import Path
 parser = argparse.ArgumentParser(description='Generate fixed amount of random integers and saves it in the INPUT file')
 parser.add_argument('N', metavar='N', type=int,
                     help='the amount of numbers to be generated')
-parser.add_argument('--max', dest='max', default=2**31 - 1,
+parser.add_argument('--max', dest='max', default=2**31 - 1, type=int,
                     help="""maximum number that can be generated;
                     default: 2**31 - 1""")
-parser.add_argument('--min', dest='min',
+parser.add_argument('--min', dest='min', type=int,
                     help="""minimum number that can be generated;
                     default: -max
                     """)

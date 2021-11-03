@@ -28,17 +28,39 @@
  * //www.gnu.org/licenses/>.
  */
 
+/**
+ * @file merge_sort.c
+ * @brief tests merge_sort behaviour
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #include "merge_sort.h"
 
 #include <assert.h>
 #include <stdlib.h>
 
-int _is_sorted(int *a, int size) {
+/**
+ * @brief verifies if the elements in an array are sorted in ascending order
+ * 
+ * @param arr the array to check
+ * @param size the length of the array
+ * @return int 0 if the array is not sorted, else 1
+ */
+int _is_sorted(int *arr, int size) {
   for (int i = 0; i < size - 1; i++)
-    if (a[i] > a[i + 1]) return 0;
+    if (arr[i] > arr[i + 1]) return 0;
   return 1;
 }
 
+/**
+ * @brief copies the value contained in an array stored in the stack to an array stored in the heap
+ * 
+ * @param heap_array the array stored in the heap
+ * @param stack_array the array stored in the stack
+ * @param size the size of the stack array
+ */
 void _load_from_stackarr(int *heap_array, int *stack_array, int size) {
   for (size_t i = 0; i < size; i++) heap_array[i] = stack_array[i];
 }
@@ -49,6 +71,13 @@ int _equals_with_stackarr(int *heap_array, int *stack_array, int size) {
   return 1;
 }
 
+/**
+ * @brief verifies if the given array is correctly sorted by the merge_sort and its resulting elements are equal to the given solution
+ * 
+ * @param stack_arr the array to check
+ * @param solution the expected result
+ * @param size the size of the arrays
+ */
 void _test_merge_sort(int *stack_arr, int *solution, int size) {
   int *arr = malloc(size * sizeof(int));
   _load_from_stackarr(arr, stack_arr, size);
@@ -58,6 +87,14 @@ void _test_merge_sort(int *stack_arr, int *solution, int size) {
   assert(_is_sorted(arr, size) == 1);
 }
 
+/**
+ * @brief verifies if the given array is correctly sorted by the merge_sort_tasksize and its resulting elements are equal to the given solution
+ * 
+ * @param stack_arr the array to check
+ * @param solution the expected result
+ * @param size the size of the arrays
+ * @param task_size the maximum dimension of the array that can be processed by a single thread
+ */
 void _test_merge_sort_tasksize(int *stack_arr, int *solution, int size,
                                int task_size) {
   int *arr = malloc(size * sizeof(int));
@@ -68,6 +105,10 @@ void _test_merge_sort_tasksize(int *stack_arr, int *solution, int size,
   assert(_is_sorted(arr, size) == 1);
 }
 
+/**
+ * @brief tests merge_sort with an empty array
+ * 
+ */
 void test_empty_array() {
   int size = 0;
   int stack_arr[0] = {};
@@ -76,6 +117,10 @@ void test_empty_array() {
   _test_merge_sort(stack_arr, solution, size);
 }
 
+/**
+ * @brief tests merge_sort call with an array with one element
+ * 
+ */
 void test_one_element() {
   int size = 1;
   int stack_arr[1] = {1};
@@ -84,6 +129,10 @@ void test_one_element() {
   _test_merge_sort(stack_arr, solution, size);
 }
 
+/**
+ * @brief tests merge_sort call with an array whose elements are in reverse order
+ * 
+ */
 void test_descendent() {
   int size = 5;
   int stack_arr[5] = {5, 2, -1, -4, -6};
@@ -92,6 +141,10 @@ void test_descendent() {
   _test_merge_sort(stack_arr, solution, size);
 }
 
+/**
+ * @brief tests merge_sort call with an array whose elements are all different from each other
+ * 
+ */
 void test_full_different() {
   int size = 5;
   int stack_arr[5] = {5, -1, 4, 2, -6};
@@ -100,6 +153,10 @@ void test_full_different() {
   _test_merge_sort(stack_arr, solution, size);
 }
 
+/**
+ * @brief tests merge_sort call with an array whose elements are all equal from each other
+ * 
+ */
 void test_full_equals() {
   int size = 5;
   int stack_arr[5] = {42, 42, 42, 42, 42};
@@ -108,6 +165,10 @@ void test_full_equals() {
   _test_merge_sort(stack_arr, solution, size);
 }
 
+/**
+ * @brief tests merge_sort call with an array in which some elements are equal
+ * 
+ */
 void test_some_equals() {
   int size = 5;
   int stack_arr[5] = {5, -1, 5, 2, 6};
@@ -116,6 +177,10 @@ void test_some_equals() {
   _test_merge_sort(stack_arr, solution, size);
 }
 
+/**
+ * @brief tests merge_sort call with an array whose elements are all positive
+ * 
+ */
 void test_full_positive() {
   int size = 5;
   int stack_arr[5] = {5, 1, 4, 2, 6};
@@ -124,6 +189,10 @@ void test_full_positive() {
   _test_merge_sort(stack_arr, solution, size);
 }
 
+/**
+ * @brief tests merge_sort with an array in which every element is negative 
+ * 
+ */
 void test_full_negative() {
   int size = 5;
   int stack_arr[5] = {-5, -1, -4, -2, -6};
@@ -132,6 +201,10 @@ void test_full_negative() {
   _test_merge_sort(stack_arr, solution, size);
 }
 
+/**
+ * @brief tests merge_sort with an array whose elements are already in order
+ * 
+ */
 void test_ordered() {
   int size = 5;
   int stack_arr[5] = {-3, -2, 1, 5, 6};
@@ -140,6 +213,10 @@ void test_ordered() {
   _test_merge_sort(stack_arr, solution, size);
 }
 
+/**
+ * @brief tests merge_sort giving the wrong size as argument
+ * 
+ */
 void test_fail_n() {
   int size = 5;
   int stack_arr[5] = {-3, -2, 1, 5, 6};
@@ -151,6 +228,10 @@ void test_fail_n() {
   assert(_equals_with_stackarr(arr, stack_arr, size) == 1);
 }
 
+/**
+ * @brief tests merge_sort_tasksize with an array whose elements are both negative and positive 
+ * 
+ */
 void test_explicit_tasksize() {
   int size = 5;
   int stack_arr[5] = {5, -1, 4, 2, -6};

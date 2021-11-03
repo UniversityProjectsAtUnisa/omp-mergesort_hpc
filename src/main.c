@@ -48,17 +48,18 @@
 /**
  * @brief calls and measure the execution time of merge_sort function
  * 
- * @param argc numbers of arguments
+ * @param argc number of arguments
  * @param argv arguments. Accept task_size as first argument. Defaults to 100.
  * @return int status code
  */
 int main(int argc, char* argv[]) {
   DEBUG_PRINT("argc: %d\n", argc);
   int task_size = (argc > 1) ? atoi(argv[1]) : TASK_SIZE;
+  char* filename = (argc > 2) ? argv[2] : FILENAME;
   DEBUG_PRINT("task_size: %d\n", task_size);
   size_t size;
   int *arr;
-  read_file(&arr, &size);
+  read_file(&arr, &size, filename);
 
   debug_print_array(arr, size);
 
@@ -83,18 +84,19 @@ int main(int argc, char* argv[]) {
  * 
  * @param arr the array to be filled with the data from the file FILENAME
  * @param size the size of the array
+ * @param filename the name of the input file
  */
-void read_file(int** arr, size_t* size) {
+void read_file(int** arr, size_t* size, char* filename) {
   FILE* fp;
-  if ((fp = fopen(FILENAME, "r")) == NULL) {
-    DEBUG_PUTS("Input file not found");
+  if ((fp = fopen(filename, "r")) == NULL) {
+    puts("Input file not found");
     exit(EXIT_FAILURE);
   }
 
   fscanf(fp, "%ld\n", size);
   *arr = malloc(*size * sizeof(int));
   if (*arr == NULL) {
-    DEBUG_PUTS("Memory could not be allocated");
+    puts("Memory could not be allocated");
     exit(EXIT_FAILURE);
   }
 

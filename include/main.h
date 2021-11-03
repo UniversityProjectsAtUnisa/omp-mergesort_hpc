@@ -47,8 +47,9 @@
  * 
  * @param arr the array to be filled with the data from the file FILENAME
  * @param size the size of the array
+ * @param filename the name of the input file
  */
-void read_file(int **arr, size_t *size);
+void read_file(int **arr, size_t *size, char *filename);
 
 /**
  * @brief Print for debug of the elements of an array
