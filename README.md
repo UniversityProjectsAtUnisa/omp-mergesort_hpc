@@ -1,4 +1,8 @@
 # Contest OMP
+
+Docs status:\
+[![Netlify Status](https://api.netlify.com/api/v1/badges/48091397-01e7-4783-ad50-3003d7ced228/deploy-status)](https://app.netlify.com/sites/contestomp/deploys)
+
 ## General Instructions
 
 To build the executable both for tests and source code run\
