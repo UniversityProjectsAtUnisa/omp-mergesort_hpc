@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>OMP Contest: src/merge_sort.c File Reference</title>
+<title>OMP Contest: include/merge_sort.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,51 +61,54 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">merge_sort.c File Reference</div>  </div>
+<div class="title">merge_sort.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>implements a parallel version of the merge_sort algorithm  
-<a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="merge__sort_8h_source.html">merge_sort.h</a>&quot;</code><br />
-<code>#include &lt;omp.h&gt;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for merge_sort.c:</div>
+<div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="src_2merge__sort_8c__incl.png" border="0" usemap="#src_2merge__sort_8c" alt=""/></div>
-<map name="src_2merge__sort_8c" id="src_2merge__sort_8c">
-<area shape="rect" title="implements a parallel version of the merge_sort algorithm" alt="" coords="140,5,260,32"/>
-<area shape="rect" href="merge__sort_8h.html" title=" " alt="" coords="5,80,104,107"/>
-<area shape="rect" title=" " alt="" coords="128,80,187,107"/>
-<area shape="rect" title=" " alt="" coords="211,80,275,107"/>
-<area shape="rect" title=" " alt="" coords="299,80,365,107"/>
+<div class="center"><img src="merge__sort_8h__dep__incl.png" border="0" usemap="#include_2merge__sort_8hdep" alt=""/></div>
+<map name="include_2merge__sort_8hdep" id="include_2merge__sort_8hdep">
+<area shape="rect" title=" " alt="" coords="101,5,243,32"/>
+<area shape="rect" href="main_8c.html" title="measures the execution time of a parallel implementation of the merge_sort algorithm" alt="" coords="5,80,88,107"/>
+<area shape="rect" href="src_2merge__sort_8c.html" title="implements a parallel version of the merge_sort algorithm" alt="" coords="112,80,232,107"/>
+<area shape="rect" href="test_2merge__sort_8c.html" title="tests merge_sort behaviour" alt="" coords="257,80,381,107"/>
 </map>
 </div>
-</div><table class="memberdecls">
+</div>
+<p><a href="merge__sort_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a427ff0fce44ee6a621afaa8c38070487"><td class="memItemLeft" align="right" valign="top"><a id="a427ff0fce44ee6a621afaa8c38070487"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TASK_SIZE</b>&#160;&#160;&#160;100</td></tr>
+<tr class="separator:a427ff0fce44ee6a621afaa8c38070487"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0592603331df1296151101f3e09cb549"><td class="memItemLeft" align="right" valign="top"><a id="a0592603331df1296151101f3e09cb549"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>merge_sort</b>(X,  n)&#160;&#160;&#160;<a class="el" href="merge__sort_8h.html#a256c168439800f74c26117514897c740">merge_sort_tasksize</a>(X, n, TASK_SIZE);</td></tr>
+<tr class="separator:a0592603331df1296151101f3e09cb549"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a256c168439800f74c26117514897c740"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="src_2merge__sort_8c.html#a256c168439800f74c26117514897c740">merge_sort_tasksize</a> (int *arr, int size, int task_size)</td></tr>
-<tr class="memdesc:a256c168439800f74c26117514897c740"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merge sorts an array with parallel programming using a minimum task size.  <a href="src_2merge__sort_8c.html#a256c168439800f74c26117514897c740">More...</a><br /></td></tr>
+<tr class="memitem:a256c168439800f74c26117514897c740"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="merge__sort_8h.html#a256c168439800f74c26117514897c740">merge_sort_tasksize</a> (int *arr, int size, int task_size)</td></tr>
+<tr class="memdesc:a256c168439800f74c26117514897c740"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merge sorts an array with parallel programming using a minimum task size.  <a href="merge__sort_8h.html#a256c168439800f74c26117514897c740">More...</a><br /></td></tr>
 <tr class="separator:a256c168439800f74c26117514897c740"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa57b1668f31ebe65935c5bc9d7d176d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="src_2merge__sort_8c.html#aa57b1668f31ebe65935c5bc9d7d176d6">_merge_sort_aux</a> (int *arr, int size, int *tmp, int task_size)</td></tr>
-<tr class="memdesc:aa57b1668f31ebe65935c5bc9d7d176d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility used by merge_sort_tasksize to implement the merge sort.  <a href="src_2merge__sort_8c.html#aa57b1668f31ebe65935c5bc9d7d176d6">More...</a><br /></td></tr>
+<tr class="memitem:aa57b1668f31ebe65935c5bc9d7d176d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="merge__sort_8h.html#aa57b1668f31ebe65935c5bc9d7d176d6">_merge_sort_aux</a> (int *arr, int size, int *tmp, int task_size)</td></tr>
+<tr class="memdesc:aa57b1668f31ebe65935c5bc9d7d176d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility used by merge_sort_tasksize to implement the merge sort.  <a href="merge__sort_8h.html#aa57b1668f31ebe65935c5bc9d7d176d6">More...</a><br /></td></tr>
 <tr class="separator:aa57b1668f31ebe65935c5bc9d7d176d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67876fdbef5cc3943ae6f3b6c34affb2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="src_2merge__sort_8c.html#a67876fdbef5cc3943ae6f3b6c34affb2">_merge</a> (int *arr1, int size1, int *arr2, int size2, int *tmp)</td></tr>
-<tr class="memdesc:a67876fdbef5cc3943ae6f3b6c34affb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility used by _merge_sort_aux to implement the merging part in the merge sort.  <a href="src_2merge__sort_8c.html#a67876fdbef5cc3943ae6f3b6c34affb2">More...</a><br /></td></tr>
+<tr class="memitem:a67876fdbef5cc3943ae6f3b6c34affb2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="merge__sort_8h.html#a67876fdbef5cc3943ae6f3b6c34affb2">_merge</a> (int *arr1, int size1, int *arr2, int size2, int *tmp)</td></tr>
+<tr class="memdesc:a67876fdbef5cc3943ae6f3b6c34affb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility used by _merge_sort_aux to implement the merging part in the merge sort.  <a href="merge__sort_8h.html#a67876fdbef5cc3943ae6f3b6c34affb2">More...</a><br /></td></tr>
 <tr class="separator:a67876fdbef5cc3943ae6f3b6c34affb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>implements a parallel version of the merge_sort algorithm </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2021 </dd></dl>
+<div class="textblock"><dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2021 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a67876fdbef5cc3943ae6f3b6c34affb2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a67876fdbef5cc3943ae6f3b6c34affb2">&#9670;&nbsp;</a></span>_merge()</h2>
@@ -209,6 +212,10 @@ Functions</h2></td></tr>
     <tr><td class="paramname">arr</td><td>the array to be sorted </td></tr>
     <tr><td class="paramname">size</td><td>the size of the array </td></tr>
     <tr><td class="paramname">tmp</td><td>the temporary array to implement the algorithm </td></tr>
+    <tr><td class="paramname">task_size</td><td>the minimum task size to create a new task</td></tr>
+    <tr><td class="paramname">arr</td><td>the array to be sorted </td></tr>
+    <tr><td class="paramname">size</td><td>the size of the array </td></tr>
+    <tr><td class="paramname">tmp</td><td>the temporary array to implement the algorithm </td></tr>
     <tr><td class="paramname">task_size</td><td>the maximum dimension of the array that can be processed by a single thread </td></tr>
   </table>
   </dd>
@@ -251,6 +258,9 @@ Functions</h2></td></tr>
 <p>Merge sorts an array with parallel programming using a minimum task size. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">arr</td><td>the array to be sorted </td></tr>
+    <tr><td class="paramname">size</td><td>the size of the array </td></tr>
+    <tr><td class="paramname">task_size</td><td>the minimum task size to create a new task</td></tr>
     <tr><td class="paramname">arr</td><td>the array to be sorted </td></tr>
     <tr><td class="paramname">size</td><td>the size of the array </td></tr>
     <tr><td class="paramname">task_size</td><td>the maximum dimension of the array that can be processed by a single thread </td></tr>

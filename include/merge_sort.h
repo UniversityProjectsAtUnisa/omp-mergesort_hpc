@@ -28,6 +28,13 @@
  * //www.gnu.org/licenses/>.
  */
 
+/**
+ * @file merge_sort.h
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #ifndef _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MERGE_SORT_H_
 #define _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MERGE_SORT_H_
 

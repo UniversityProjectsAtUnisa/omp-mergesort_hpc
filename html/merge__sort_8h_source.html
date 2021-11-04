@@ -69,7 +69,7 @@ $(function() {
 <div class="title">merge_sort.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<a href="merge__sort_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Course: High Performance Computing 2020/2021</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * Lecturer: Francesco Moscato    fmoscato@unisa.it</span></div>
@@ -99,24 +99,24 @@ $(function() {
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment"> * //www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"> */</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#ifndef _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MERGE_SORT_H_</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#define _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MERGE_SORT_H_</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#define TASK_SIZE 100</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#define merge_sort(X, n) merge_sort_tasksize(X, n, TASK_SIZE);</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keywordtype">void</span> <a class="code" href="src_2merge__sort_8c.html#a256c168439800f74c26117514897c740">merge_sort_tasksize</a>(<span class="keywordtype">int</span> *arr, <span class="keywordtype">int</span> size, <span class="keywordtype">int</span> task_size);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keywordtype">void</span> <a class="code" href="src_2merge__sort_8c.html#aa57b1668f31ebe65935c5bc9d7d176d6">_merge_sort_aux</a>(<span class="keywordtype">int</span> *arr, <span class="keywordtype">int</span> size, <span class="keywordtype">int</span> *tmp, <span class="keywordtype">int</span> task_size);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keywordtype">void</span> <a class="code" href="src_2merge__sort_8c.html#a67876fdbef5cc3943ae6f3b6c34affb2">_merge</a>(<span class="keywordtype">int</span> *arr1, <span class="keywordtype">int</span> size1, <span class="keywordtype">int</span> *arr2, <span class="keywordtype">int</span> size2, <span class="keywordtype">int</span> *tmp);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#endif  // _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MERGE_SORT_H_</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#ifndef _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MERGE_SORT_H_</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#define _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MERGE_SORT_H_</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#define TASK_SIZE 100</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#define merge_sort(X, n) merge_sort_tasksize(X, n, TASK_SIZE);</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keywordtype">void</span> <a class="code" href="merge__sort_8h.html#a256c168439800f74c26117514897c740">merge_sort_tasksize</a>(<span class="keywordtype">int</span> *arr, <span class="keywordtype">int</span> size, <span class="keywordtype">int</span> task_size);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keywordtype">void</span> <a class="code" href="merge__sort_8h.html#aa57b1668f31ebe65935c5bc9d7d176d6">_merge_sort_aux</a>(<span class="keywordtype">int</span> *arr, <span class="keywordtype">int</span> size, <span class="keywordtype">int</span> *tmp, <span class="keywordtype">int</span> task_size);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keywordtype">void</span> <a class="code" href="merge__sort_8h.html#a67876fdbef5cc3943ae6f3b6c34affb2">_merge</a>(<span class="keywordtype">int</span> *arr1, <span class="keywordtype">int</span> size1, <span class="keywordtype">int</span> *arr2, <span class="keywordtype">int</span> size2, <span class="keywordtype">int</span> *tmp);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#endif  // _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MERGE_SORT_H_</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="asrc_2merge__sort_8c_html_aa57b1668f31ebe65935c5bc9d7d176d6"><div class="ttname"><a href="src_2merge__sort_8c.html#aa57b1668f31ebe65935c5bc9d7d176d6">_merge_sort_aux</a></div><div class="ttdeci">void _merge_sort_aux(int *arr, int size, int *tmp, int task_size)</div><div class="ttdoc">Utility used by merge_sort_tasksize to implement the merge sort.</div><div class="ttdef"><b>Definition:</b> merge_sort.c:70</div></div>
-<div class="ttc" id="asrc_2merge__sort_8c_html_a256c168439800f74c26117514897c740"><div class="ttname"><a href="src_2merge__sort_8c.html#a256c168439800f74c26117514897c740">merge_sort_tasksize</a></div><div class="ttdeci">void merge_sort_tasksize(int *arr, int size, int task_size)</div><div class="ttdoc">Merge sorts an array with parallel programming using a minimum task size.</div><div class="ttdef"><b>Definition:</b> merge_sort.c:54</div></div>
-<div class="ttc" id="asrc_2merge__sort_8c_html_a67876fdbef5cc3943ae6f3b6c34affb2"><div class="ttname"><a href="src_2merge__sort_8c.html#a67876fdbef5cc3943ae6f3b6c34affb2">_merge</a></div><div class="ttdeci">void _merge(int *arr1, int size1, int *arr2, int size2, int *tmp)</div><div class="ttdoc">Utility used by _merge_sort_aux to implement the merging part in the merge sort.</div><div class="ttdef"><b>Definition:</b> merge_sort.c:93</div></div>
+<div class="ttc" id="amerge__sort_8h_html_aa57b1668f31ebe65935c5bc9d7d176d6"><div class="ttname"><a href="merge__sort_8h.html#aa57b1668f31ebe65935c5bc9d7d176d6">_merge_sort_aux</a></div><div class="ttdeci">void _merge_sort_aux(int *arr, int size, int *tmp, int task_size)</div><div class="ttdoc">Utility used by merge_sort_tasksize to implement the merge sort.</div><div class="ttdef"><b>Definition:</b> merge_sort.c:70</div></div>
+<div class="ttc" id="amerge__sort_8h_html_a256c168439800f74c26117514897c740"><div class="ttname"><a href="merge__sort_8h.html#a256c168439800f74c26117514897c740">merge_sort_tasksize</a></div><div class="ttdeci">void merge_sort_tasksize(int *arr, int size, int task_size)</div><div class="ttdoc">Merge sorts an array with parallel programming using a minimum task size.</div><div class="ttdef"><b>Definition:</b> merge_sort.c:54</div></div>
+<div class="ttc" id="amerge__sort_8h_html_a67876fdbef5cc3943ae6f3b6c34affb2"><div class="ttname"><a href="merge__sort_8h.html#a67876fdbef5cc3943ae6f3b6c34affb2">_merge</a></div><div class="ttdeci">void _merge(int *arr1, int size1, int *arr2, int size2, int *tmp)</div><div class="ttdoc">Utility used by _merge_sort_aux to implement the merging part in the merge sort.</div><div class="ttdef"><b>Definition:</b> merge_sort.c:93</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

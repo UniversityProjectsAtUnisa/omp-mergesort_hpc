@@ -1,6 +1,13 @@
 {
     "files.associations": {
-        "*.h": "c"
+        "*.h": "c",
+        "array": "c",
+        "deque": "c",
+        "string": "c",
+        "unordered_map": "c",
+        "vector": "c",
+        "string_view": "c",
+        "initializer_list": "c"
     },
     "python.formatting.provider": "autopep8",
     "python.formatting.autopep8Args": [

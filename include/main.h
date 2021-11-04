@@ -27,6 +27,14 @@
  * along with OMP Mergesort implementation.  If not, see <http:
  * //www.gnu.org/licenses/>.
  */
+
+/**
+ * @file main.h
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
 #ifndef _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MAIN_H_
 #define _MNT_C_USERS_MARCO_DOCUMENTS_UNISA_HPC_CODICE_CONTEST_OMP_INCLUDE_MAIN_H_
 
